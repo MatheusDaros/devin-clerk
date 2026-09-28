@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Lets the dev server load its scripts through the public link from `npm run share`.
+  allowedDevOrigins: ["*.trycloudflare.com"],
 };
 
 export default nextConfig;
