@@ -185,7 +185,7 @@ I want to add authentication to this app with Clerk. Only write a plan for now: 
 Requirements:
 - Set up Clerk with the Clerk CLI in accountless mode, following the rules in AGENTS.md. I don't have Clerk keys.
 - Signed-out visitors see "Sign in" and "Sign up" buttons in the header. Signed-in users see their avatar menu instead.
-- /dashboard requires sign-in and greets the user by first name.
+- /dashboard requires sign-in and greets the user by first name (or the start of their email if they have no name).
 - /api/notes returns a 401 JSON error when signed out.
 - The landing page (/) stays public.
 
@@ -282,6 +282,12 @@ Don't commit .env.local or the .clerk folder.</pre>
       </details>
       <details><summary>The verification email never arrives</summary>
         <p>Sign up with an email that contains <code>+clerk_test</code> (e.g. <code>yourname+clerk_test@example.com</code>) and use code <code>424242</code>. Clerk development apps accept these without sending mail.</p>
+      </details>
+      <details><summary>The sign-up form shows "Verify you are human"</summary>
+        <p>That's Clerk's bot protection. Tick the checkbox and continue. Inside Devin's automated browser it can block Devin from finishing the sign-up itself, which is why you do the sign-up test in the preview yourself.</p>
+      </details>
+      <details><summary>The dashboard says "Welcome back" without my name</summary>
+        <p>New Clerk apps only ask for email and password at sign-up, so there's no first name yet. Click your avatar → <strong>Manage account</strong> and add your name, then reload the dashboard.</p>
       </details>
       <details><summary>I'm running behind</summary>
         <div class="prompt"><pre data-prompt>Compare my branch with the `solution` branch of this repository and finish whatever is still missing from Prompt 2. Then share a live preview.</pre><button class="copy" type="button">Copy</button></div>

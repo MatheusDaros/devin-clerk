@@ -23,4 +23,6 @@
 - **Devin asks for Clerk keys:** reply "Use accountless mode as described in AGENTS.md (`npx -y clerk@latest init`)."
 - **No preview link:** ask Devin to "share a browser preview of the dev server on port 3000", or open the session's Desktop tab.
 - **Verification email never arrives:** use a `+clerk_test` email and code `424242`.
+- **"Verify you are human" on sign-up:** Clerk bot protection; the attendee ticks it in the preview. It can block Devin's own automated browser, so attendees do the sign-up test themselves.
+- **Dashboard greeting has no name:** new Clerk apps don't collect names at sign-up. Add one via avatar → Manage account.
 - **Running out of time:** use the catch-up prompt in `workshop/prompts.md`.
