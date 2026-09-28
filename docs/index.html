@@ -73,6 +73,14 @@
   .idea textarea { resize: vertical; min-height: 64px; }
   .idea input:focus, .idea textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   .idea .hint { font-weight: 400; color: var(--muted); font-size: 13px; }
+  .tip { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 16px 0; }
+  .info { position: relative; display: inline-block; }
+  .info > button { font: 700 12px ui-sans-serif, system-ui; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--accent); background: #fff; color: var(--accent); cursor: help; padding: 0; vertical-align: 1px; }
+  .info .pop { display: none; position: absolute; z-index: 20; left: 50%; transform: translateX(-50%); top: calc(100% + 6px); width: min(360px, 86vw); background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 12px 14px; font-size: 14px; font-weight: 400; }
+  .info .pop::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+  .info .pop p { margin: 0 0 8px; }
+  .info .pop ul { margin: 0; padding-left: 18px; }
+  .info:hover .pop, .info:focus-within .pop { display: block; }
   .choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
   .choices details { margin: 0; }
   table.agenda { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }
@@ -233,6 +241,22 @@ In the plan, list the features you'd put on the Coming soon page, the files you'
 
     <section class="step" id="build">
       <header><span class="num">4</span><h2>Build it and try it out</h2><span class="budget">11 min</span></header>
+      <div class="tip"><strong>Tip: switch to Fusion before you send Prompt 2.</strong> Use the agent selector next to the message box in your Devin session and pick <strong>Fusion</strong>. The new mode applies from your next message.
+        <span class="info"><button type="button" aria-label="What is Fusion?" aria-describedby="fusion-pop">?</button>
+          <span class="pop" id="fusion-pop" role="tooltip">
+            <p><strong>What is Fusion?</strong> Devin runs two models together. A frontier "lead" model plans, handles the hard parts and reviews the work. A cheaper "sidekick" model does the routine steps: reading files, editing and running checks. You still talk to one Devin.</p>
+            <p><strong>Why use it here?</strong> Implementing an approved plan is mostly routine work, and that's where Fusion saves the most while keeping frontier-level quality. Your usage lasts longer.</p>
+            <p><strong>Now 30–40% cheaper:</strong> on Sept 28, 2026, Cognition announced that Devin is 30–40% cheaper in Fusion and Normal modes. Fusion also now leads the FrontierCode 1.1 Extended benchmark (score 68.8, about $0.60 per task).</p>
+            <ul>
+              <li><a href="https://devin.ai/blog/more-efficient-devin" target="_blank" rel="noopener">Devin is now up to 40% more cost-efficient</a> (<a href="https://x.com/cognition/status/2104633216145436831" target="_blank" rel="noopener">announcement on X</a>)</li>
+              <li><a href="https://cognition.com/blog/local-fusion" target="_blank" rel="noopener">Introducing Fusion in Devin Desktop &amp; CLI</a></li>
+              <li><a href="https://cognition.com/blog/devin-fusion" target="_blank" rel="noopener">Devin Fusion: how it works and benchmarks</a></li>
+              <li><a href="https://docs.devin.ai/desktop/fusion" target="_blank" rel="noopener">Fusion docs</a></li>
+            </ul>
+          </span>
+        </span>
+        <br>If you don't see Fusion, keep the default mode. The prompts work either way.
+      </div>
       <div class="prompt">
         <div class="label">Prompt 2: Implement and verify</div>
         <pre data-prompt>The plan is approved, go ahead and implement it. When you're done:
