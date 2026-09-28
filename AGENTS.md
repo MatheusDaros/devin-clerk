@@ -65,4 +65,4 @@ Run lint, typecheck and build before opening a PR.
 ## Claiming the Clerk app
 
 - When the user asks to claim their Clerk app, run `npx -y clerk@latest open --print`. It prints a one-time claim URL (`https://dashboard.clerk.com/apps/claim?...`). Send it only to the user in this chat: it works like a password, so never put it in files, commits, PRs or logs.
-- After the user claims it, the keys in `.env.local` stay the same and the running app keeps working. Settings such as password rules are changed by the user in the Clerk Dashboard.
+- After the user claims it, the keys in `.env.local` stay the same and the running app keeps working. The claim page then asks the user to paste the keys into `.env.local`: tell them to click "Otherwise skip" instead, and never ask them to send you the keys. Settings such as password rules are changed by the user in the Clerk Dashboard.
