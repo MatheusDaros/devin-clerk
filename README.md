@@ -1,6 +1,6 @@
-# Vibe Board — Clerk × Devin workshop
+# Clerk × Devin workshop starter
 
-A tiny Next.js app with **no authentication yet**. In this 40-minute workshop you'll fork it, connect it to [Devin](https://app.devin.ai), and prompt Devin to add sign-in, sign-up and a protected dashboard with [Clerk](https://clerk.com). You won't write any code yourself.
+A tiny Next.js app shell with **no authentication yet**. In this 40-minute workshop you'll fork it, connect it to [Devin](https://app.devin.ai), describe an app idea of your own, and prompt Devin to turn this shell into that app, with sign-in and sign-up by [Clerk](https://clerk.com) and a members-only "Coming soon" page listing what to build next. You won't write any code yourself.
 
 **Start the walkthrough: https://matheusdaros.github.io/devin-clerk/**
 
@@ -8,15 +8,15 @@ A tiny Next.js app with **no authentication yet**. In this 40-minute workshop yo
 
 | Path | What it is |
 |---|---|
+| `app.config.ts` | App name, description, emoji, accent color and the "Coming soon" feature list |
 | `app/page.tsx` | Public landing page |
-| `app/dashboard/page.tsx` | The board. Private in theory, public in practice (for now) |
-| `app/api/notes/route.ts` | Mock notes API |
-| `app.config.ts` | Name, tagline, emoji and accent color. Make it yours |
+| `app/dashboard/page.tsx` | "Coming soon" page. Members-only in theory, public in practice (for now) |
+| `app/api/roadmap/route.ts` | Returns the upcoming features as JSON |
 | `AGENTS.md` | Instructions Devin reads before touching the code |
 | `workshop/` | Prompts (offline copy), facilitator notes, pre-event email |
 | `docs/` | The walkthrough page (GitHub Pages) |
 
-The `solution` branch has a finished version if you want to compare or catch up.
+The `solution` branch has a finished example if you want to compare or catch up.
 
 ## Run it yourself (optional)
 
