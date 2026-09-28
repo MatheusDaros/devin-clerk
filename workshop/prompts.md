@@ -32,6 +32,8 @@ Reply with the full updated plan only. Don't edit files, install anything or run
 
 ## Prompt 2: Implement and verify
 
+Tip: before sending this, switch the session to **Fusion** in the agent selector next to the message box. A frontier lead model plans and reviews while a cheaper sidekick does the routine edits and checks, so implementation costs less at frontier quality. As of Sept 28, 2026, Fusion is also 30–40% cheaper (https://devin.ai/blog/more-efficient-devin). See https://cognition.com/blog/local-fusion and https://docs.devin.ai/desktop/fusion.
+
 ```text
 The plan is approved, go ahead and implement it. When you're done:
 1. Run lint, typecheck and build, and fix any errors.
