@@ -16,7 +16,7 @@ export default function Home() {
         Go to your board →
       </Link>
       <p className="text-sm text-black/50">
-        This page is public. The dashboard should be for signed-in users only.
+        This page is public. The dashboard is for signed-in users only.
       </p>
     </section>
   );
