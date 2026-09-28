@@ -200,7 +200,7 @@
 
 My app idea is "{{app}}": {{desc}}
 
-Turn this starter into the first version of my app, with sign-in by Clerk. Only write a plan for now: don't change any code until I approve it.
+Turn this starter into the first version of my app, with sign-in by Clerk. This message is for planning only: reply with a plan and then stop. Don't edit files, install packages or run the Clerk CLI until I reply with "approved".
 
 Requirements:
 - Brand it: put my app's name and description in app.config.ts and pick an emoji and accent color that fit.
@@ -210,7 +210,7 @@ Requirements:
 - /dashboard requires sign-in and is a "Coming soon" page: greet the user by first name (or the start of their email if they have no name) and list 4–6 features to build next, based on my description.
 - /api/roadmap returns a 401 JSON error when signed out.
 
-In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short.</pre>
+In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short, and end by asking me to approve it.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <h3>Review the plan</h3>
@@ -224,10 +224,15 @@ In the plan, list the features you'd put on the Coming soon page, the files you'
       <p>Then reply with <strong>one change of your own</strong>. For example:</p>
       <div class="prompt">
         <div class="label">Example follow-up</div>
-        <pre data-prompt>Looks good. Two changes: swap feature 3 for "&lt;a feature you want&gt;", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.</pre>
+        <pre data-prompt>Not approved yet. Update the plan with two changes: swap feature 3 for "&lt;a feature you want&gt;", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.
+
+Reply with the full updated plan only. Don't edit files, install anything or run commands yet. I'll reply "approved" when it's ready to build.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
-      <div class="checkpoint"><strong>Checkpoint:</strong> Devin shows an updated plan that includes your change and is waiting for your go-ahead.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> Devin shows an updated plan that includes your change and is waiting for your go-ahead. No files have changed yet.</div>
+      <details><summary>Devin started building anyway</summary>
+        <p>Send <em>"Stop. Don't make any more changes. Show me the plan you're following, including my changes, and wait for my approval."</em> Anything it already changed stays on its branch, and Prompt 2 will pick up from there.</p>
+      </details>
       <label class="done-toggle"><input type="checkbox" data-done="plan"> I have a plan I like</label>
     </section>
 

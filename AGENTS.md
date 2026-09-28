@@ -31,6 +31,10 @@ Run lint, typecheck and build before opening a PR.
 - `components/Header.tsx` — top nav; `{/* AUTH CONTROLS GO HERE */}` marks where sign-in / user controls belong.
 - `docs/` and `workshop/` — the attendee walkthrough and facilitator material. Don't modify them for app changes.
 
+## Planning requests
+
+- When the user asks for a plan, or asks to change a plan, reply with the plan and stop. Don't edit files, install packages or run commands (including the Clerk CLI) until the user explicitly approves, e.g. by saying "approved". Feedback on a plan is not approval: reply with the full updated plan and wait again.
+
 ## Customizing the app
 
 - When the user gives an app name and description, update `app.config.ts`: use their name and description as written (fix only typos), choose a fitting emoji and accent color, and write 4–6 `upcomingFeatures` that follow from the description. Each one should be concrete and small enough to build in one Devin session. Titles under 5 words, descriptions one sentence.

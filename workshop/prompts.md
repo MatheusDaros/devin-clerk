@@ -9,7 +9,7 @@ Repository: <you>/devin-clerk
 
 My app idea is "<app name>": <one-sentence description>
 
-Turn this starter into the first version of my app, with sign-in by Clerk. Only write a plan for now: don't change any code until I approve it.
+Turn this starter into the first version of my app, with sign-in by Clerk. This message is for planning only: reply with a plan and then stop. Don't edit files, install packages or run the Clerk CLI until I reply with "approved".
 
 Requirements:
 - Brand it: put my app's name and description in app.config.ts and pick an emoji and accent color that fit.
@@ -19,13 +19,15 @@ Requirements:
 - /dashboard requires sign-in and is a "Coming soon" page: greet the user by first name (or the start of their email if they have no name) and list 4–6 features to build next, based on my description.
 - /api/roadmap returns a 401 JSON error when signed out.
 
-In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short.
+In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short, and end by asking me to approve it.
 ```
 
 After reading the plan, reply with one change of your own, for example:
 
 ```text
-Looks good. Two changes: swap feature 3 for "<a feature you want>", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.
+Not approved yet. Update the plan with two changes: swap feature 3 for "<a feature you want>", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.
+
+Reply with the full updated plan only. Don't edit files, install anything or run commands yet. I'll reply "approved" when it's ready to build.
 ```
 
 ## Prompt 2: Implement and verify
