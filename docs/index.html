@@ -141,9 +141,9 @@
       <ol class="tasks">
         <li><strong>A GitHub account.</strong> Any personal account works (<a href="https://github.com/signup" target="_blank" rel="noopener">sign up</a>).</li>
         <li><strong>Devin Pro, activated with your event coupon.</strong> Sign up at <a href="https://app.devin.ai" target="_blank" rel="noopener">app.devin.ai</a>, open <a href="https://app.devin.ai/settings/plans" target="_blank" rel="noopener">Settings → Plans</a>, pick <strong>Pro</strong>, and enter the coupon code you received from the organizer at checkout.</li>
-        <li><strong>GitHub connected to Devin.</strong> Go to <a href="https://app.devin.ai/settings/connections" target="_blank" rel="noopener">Settings → Connections</a> and connect GitHub. If GitHub asks which repositories Devin can access, choosing <em>All repositories</em> saves a step later.</li>
+        <li><strong>GitHub connected to Devin.</strong> Go to <a href="https://app.devin.ai/settings/connections/github" target="_blank" rel="noopener">Settings → Connections → GitHub</a>, click <strong>Add Connection</strong>, and pick your personal GitHub account. When GitHub asks which repositories Devin can access, choose <em>All repositories</em>. That saves a step later.</li>
       </ol>
-      <div class="checkpoint"><strong>Checkpoint:</strong> your Devin plan page shows <strong>Pro</strong>, and GitHub shows as connected under Connections.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> your Devin plan page shows <strong>Pro</strong>, and GitHub is listed under Settings → Connections.</div>
       <p>You <strong>don't</strong> need a Clerk account. Devin will create a temporary development app that you can claim at the end.</p>
       <label class="done-toggle"><input type="checkbox" data-done="before"> I'm ready</label>
     </section>
@@ -167,12 +167,18 @@
     <section class="step" id="connect">
       <header><span class="num">2</span><h2>Connect your fork to Devin</h2><span class="budget">5 min</span></header>
       <ol class="tasks">
-        <li>Open <a href="https://app.devin.ai/settings/connections" target="_blank" rel="noopener">Devin → Settings → Connections</a> and click your GitHub connection. Check that <code class="js-repo">&lt;you&gt;/devin-clerk</code> is in the list of available repositories.
-          <details><summary>My fork isn't listed</summary>
-            <p>When you connected GitHub, you probably chose "Only select repositories". On GitHub, go to <a href="https://github.com/settings/installations" target="_blank" rel="noopener">Settings → Applications → Installed GitHub Apps</a>, click <strong>Configure</strong> next to Devin, add <code>devin-clerk</code>, and save. Then reload Devin.</p>
+        <li>Go to the <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin home page</a> and start a new <strong>Agent</strong> session.</li>
+        <li>Click the <strong>repository selector</strong> and choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.
+          <details><summary>My fork isn't in the list</summary>
+            <p>Devin can only see repositories that its GitHub app is allowed to access. You probably chose "Only select repositories" when you connected GitHub.</p>
+            <ol class="tasks">
+              <li>On GitHub, open <a href="https://github.com/settings/installations" target="_blank" rel="noopener">Settings → Applications → Installed GitHub Apps</a> and click <strong>Configure</strong> next to the Devin app.</li>
+              <li>Under <strong>Repository access</strong>, choose <em>All repositories</em> or add <code>devin-clerk</code>, then click <strong>Save</strong>.</li>
+              <li>Reload Devin and open the selector again. It can take a minute for the list to update.</li>
+            </ol>
+            <p>If you forked into a GitHub <strong>organization</strong> instead of your personal account, the Devin app must also be installed on that organization. In Devin, open <a href="https://app.devin.ai/settings/connections/github" target="_blank" rel="noopener">Settings → Connections → GitHub</a>, click <strong>Add Connection</strong> and pick the organization.</p>
           </details>
         </li>
-        <li>Go to the <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin home page</a> and start a new <strong>Agent</strong> session. If there's a repository picker, choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.</li>
         <li>Keep the tab open. You'll paste the first prompt in the next step.</li>
       </ol>
       <div class="note">Devin reads <code>AGENTS.md</code> in your repo before it starts. It covers the project's commands and the Clerk rules, e.g. "use the Clerk CLI in accountless mode" and "never commit keys". That's why your prompts can stay short.</div>
