@@ -40,4 +40,6 @@ Run lint, typecheck and build before opening a PR.
 - Use Clerk's prebuilt components (`SignInButton`, `SignUpButton`, `UserButton`, `Show`, `SignIn`, `SignUp`, `UserProfile`) and style them with the `appearance` prop, using the accent color from `app.config.ts`.
 - API routes should return `401` JSON when signed out rather than redirecting.
 - After setup, run `npx -y clerk@latest doctor` and fix what it reports.
+- New Clerk apps only collect email + password at sign-up, so `user.firstName` can be `null`. Fall back to something sensible (e.g. the part of the email before `@`).
+- Sign-up may show a "Verify you are human" (Cloudflare) check that automated browsers can't pass. Don't try to bypass it; ask the user to finish the sign-up in the preview.
 - To test sign-up without a real inbox, use an email containing `+clerk_test` (e.g. `jane+clerk_test@example.com`) and the verification code `424242`.
