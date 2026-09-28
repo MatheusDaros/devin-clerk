@@ -1,7 +1,8 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import { appConfig } from "@/app.config";
+import { appConfig, clerkAppearance } from "@/app.config";
 import { Header } from "@/components/Header";
 import "./globals.css";
 
@@ -28,8 +29,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       style={{ "--accent": appConfig.accent } as CSSProperties}
     >
       <body className="flex min-h-full flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
+        <ClerkProvider appearance={clerkAppearance}>
+          <Header />
+          <main className="flex-1">{children}</main>
+        </ClerkProvider>
       </body>
     </html>
   );
