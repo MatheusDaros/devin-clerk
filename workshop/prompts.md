@@ -12,7 +12,7 @@ I want to add authentication to this app with Clerk. Only write a plan for now: 
 Requirements:
 - Set up Clerk with the Clerk CLI in accountless mode, following the rules in AGENTS.md. I don't have Clerk keys.
 - Signed-out visitors see "Sign in" and "Sign up" buttons in the header. Signed-in users see their avatar menu instead.
-- /dashboard requires sign-in and greets the user by first name.
+- /dashboard requires sign-in and greets the user by first name (or the start of their email if they have no name).
 - /api/notes returns a 401 JSON error when signed out.
 - The landing page (/) stays public.
 
