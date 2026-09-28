@@ -16,6 +16,7 @@ A small Next.js (App Router, TypeScript, Tailwind v4) app shell used in the "Add
 
 - Install: `npm install`
 - Dev server: `npm run dev` (http://localhost:3000)
+- Public link to the dev server: `npm run share` (see "Sharing the app")
 - Lint: `npm run lint`
 - Typecheck: `npm run typecheck`
 - Build: `npm run build`
@@ -51,5 +52,17 @@ Run lint, typecheck and build before opening a PR.
 - API routes (e.g. `/api/roadmap`) should return `401` JSON when signed out rather than redirecting.
 - After setup, run `npx -y clerk@latest doctor` and fix what it reports.
 - New Clerk apps only collect email + password at sign-up, so `user.firstName` can be `null`. Fall back to something sensible (e.g. the part of the email before `@`).
-- Sign-up may show a "Verify you are human" (Cloudflare) check that automated browsers can't pass. Don't try to bypass it; ask the user to finish the sign-up in the preview.
+- Sign-up may show a "Verify you are human" (Cloudflare) check that automated browsers can't pass. Don't try to bypass it, and don't ask the user to sign up in your own browser: the user tests sign-up at the public link (see "Sharing the app").
 - To test sign-up without a real inbox, use an email containing `+clerk_test` (e.g. `jane+clerk_test@example.com`) and the verification code `424242`.
+
+## Sharing the app
+
+- Clerk sign-in doesn't work in the built-in Devin browser preview, so don't share one. Instead, with the dev server running on port 3000, run `npm run share` in a separate shell and keep it running. It starts a Cloudflare quick tunnel (no account needed) and prints a public `https://<random>.trycloudflare.com` link; send that link to the user.
+- `next.config.ts` allows `*.trycloudflare.com` in `allowedDevOrigins` so the dev server's scripts load through the link. Keep it.
+- The link is public while the tunnel runs, and changes every time `npm run share` restarts. If you restart it, send the new link and say the old one no longer works. Don't put the link in commits or PRs.
+- Before sending the link, check it yourself with `curl`: `/` returns 200, `/dashboard` redirects to an `https://` sign-in URL, and `/api/roadmap` returns 401. Then tell the user what you checked and that the sign-up test is theirs to do in their own browser.
+
+## Claiming the Clerk app
+
+- When the user asks to claim their Clerk app, run `npx -y clerk@latest open --print`. It prints a one-time claim URL (`https://dashboard.clerk.com/apps/claim?...`). Send it only to the user in this chat: it works like a password, so never put it in files, commits, PRs or logs.
+- After the user claims it, the keys in `.env.local` stay the same and the running app keeps working. Settings such as password rules are changed by the user in the Clerk Dashboard.

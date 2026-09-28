@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "share": "bash scripts/share.sh",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit"
   },
