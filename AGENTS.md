@@ -8,9 +8,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Vibe Board — workshop sample app
+# Workshop starter app
 
-A small Next.js (App Router, TypeScript, Tailwind v4) app used in the "Add auth with Clerk by prompting Devin" workshop. It starts with **no authentication**; attendees ask an agent to add Clerk.
+A small Next.js (App Router, TypeScript, Tailwind v4) app shell used in the "Add auth with Clerk by prompting Devin" workshop. Each attendee turns it into their own app idea: they give Devin a name and a one-line description, and Devin brands the app, adds Clerk, and fills in a "Coming soon" page. It starts with **no authentication**.
 
 ## Commands
 
@@ -24,12 +24,18 @@ Run lint, typecheck and build before opening a PR.
 
 ## Layout
 
-- `app.config.ts` — app name, tagline, emoji, accent color. Change branding here, not in components.
-- `app/page.tsx` — public landing page. Must stay public.
-- `app/dashboard/page.tsx` — the board. Meant to be private.
-- `app/api/notes/route.ts` — mock notes API (reads `data/notes.json`).
+- `app.config.ts` — app `name`, `description`, `emoji`, `accent` color and `upcomingFeatures` (the "Coming soon" list). Branding and the feature list live here, not in components.
+- `app/page.tsx` — public landing page that pitches the app. Must stay public.
+- `app/dashboard/page.tsx` — the "Coming soon" page for signed-in users: a greeting plus one card per `upcomingFeatures` entry, and a "Keep building" hint pointing at the next feature. Keep that hint.
+- `app/api/roadmap/route.ts` — returns `upcomingFeatures` as JSON.
 - `components/Header.tsx` — top nav; `{/* AUTH CONTROLS GO HERE */}` marks where sign-in / user controls belong.
 - `docs/` and `workshop/` — the attendee walkthrough and facilitator material. Don't modify them for app changes.
+
+## Customizing the app
+
+- When the user gives an app name and description, update `app.config.ts`: use their name and description as written (fix only typos), choose a fitting emoji and accent color, and write 4–6 `upcomingFeatures` that follow from the description. Each one should be concrete and small enough to build in one Devin session. Titles under 5 words, descriptions one sentence.
+- Adjust the landing page copy to fit the app if needed, but keep it one screen and keep the call to action pointing at `/dashboard`.
+- When a feature from `upcomingFeatures` gets built, remove it from the list and link to it from the header.
 
 ## Adding Clerk (rules)
 
@@ -38,7 +44,7 @@ Run lint, typecheck and build before opening a PR.
 - This project is on Next.js 16, so the Clerk middleware file is `proxy.ts` (not `middleware.ts`).
 - `auth()` from `@clerk/nextjs/server` is async — always `await auth()`.
 - Use Clerk's prebuilt components (`SignInButton`, `SignUpButton`, `UserButton`, `Show`, `SignIn`, `SignUp`, `UserProfile`) and style them with the `appearance` prop, using the accent color from `app.config.ts`.
-- API routes should return `401` JSON when signed out rather than redirecting.
+- API routes (e.g. `/api/roadmap`) should return `401` JSON when signed out rather than redirecting.
 - After setup, run `npx -y clerk@latest doctor` and fix what it reports.
 - New Clerk apps only collect email + password at sign-up, so `user.firstName` can be `null`. Fall back to something sensible (e.g. the part of the email before `@`).
 - Sign-up may show a "Verify you are human" (Cloudflare) check that automated browsers can't pass. Don't try to bypass it; ask the user to finish the sign-up in the preview.

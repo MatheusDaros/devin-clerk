@@ -1,8 +1,0 @@
-[
-  { "id": "1", "title": "Rooftop coffee club", "body": "Weekly meetup where everyone brings a bean from a different country.", "tag": "community", "author": "Ada" },
-  { "id": "2", "title": "Plant-sitting app", "body": "Neighbours water each other's plants while travelling. Photos as proof.", "tag": "product", "author": "Grace" },
-  { "id": "3", "title": "Recipe remixer", "body": "Paste a recipe, get it rewritten for what's already in your fridge.", "tag": "ai", "author": "Linus" },
-  { "id": "4", "title": "Commute podcast", "body": "10-minute episodes sized to one metro ride. One topic per line.", "tag": "content", "author": "Margaret" },
-  { "id": "5", "title": "Board game library", "body": "Lend and borrow board games inside the office. QR code on every box.", "tag": "community", "author": "Alan" },
-  { "id": "6", "title": "Habit streak postcards", "body": "Hit a 30-day streak and a real postcard shows up in your mailbox.", "tag": "product", "author": "Katherine" }
-]
