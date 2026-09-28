@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add auth with Clerk, by prompting Devin: workshop walkthrough</title>
-<meta name="description" content="A 40-minute hands-on workshop: fork a sample app, connect it to Devin, and prompt Devin to add Clerk authentication.">
+<meta name="description" content="A 40-minute hands-on workshop: fork a starter app, connect it to Devin, describe your app idea, and prompt Devin to build it with Clerk sign-in.">
 <style>
   :root {
     --bg: #faf9f7; --panel: #ffffff; --ink: #18181b; --muted: #5b5b66; --line: #e7e5e4;
@@ -67,6 +67,12 @@
   details[open] summary { margin-bottom: 8px; }
   .done-toggle { display: flex; align-items: center; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--line); font-weight: 600; cursor: pointer; }
   .done-toggle input { width: 18px; height: 18px; accent-color: var(--ok); }
+  .idea { display: grid; gap: 12px; background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin: 12px 0 4px; }
+  .idea label { display: grid; gap: 4px; font-weight: 600; font-size: 14px; }
+  .idea input, .idea textarea { font: 15px ui-sans-serif, system-ui, sans-serif; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; width: 100%; min-width: 0; }
+  .idea textarea { resize: vertical; min-height: 64px; }
+  .idea input:focus, .idea textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .idea .hint { font-weight: 400; color: var(--muted); font-size: 13px; }
   .choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
   .choices details { margin: 0; }
   table.agenda { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }
@@ -114,16 +120,16 @@
       <li><a href="#plan" data-step="plan">3. Plan <span class="t">7 min</span></a></li>
       <li><a href="#build" data-step="build">4. Build + verify <span class="t">11 min</span></a></li>
       <li><a href="#customize" data-step="customize">5. Make it yours <span class="t">7 min</span></a></li>
-      <li><a href="#next" data-step="next">6. Next steps <span class="t">2 min</span></a></li>
+      <li><a href="#next" data-step="next">6. Keep building <span class="t">2 min</span></a></li>
       <li><a href="#help">Troubleshooting</a></li>
     </ol>
   </nav>
 
   <main>
     <div class="hero">
-      <h1>Add sign-in to an app with Clerk, without writing any code yourself</h1>
-      <p>In 40 minutes you'll fork a small web app called <strong>Vibe Board</strong>, connect it to <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin</a>, and prompt Devin to plan and build authentication with <a href="https://clerk.com" target="_blank" rel="noopener">Clerk</a>: sign-up, sign-in, a private dashboard, and a user menu. Then you'll make it your own.</p>
-      <p>Enter your GitHub username at the top. Every link and prompt on this page fills in with it, and your progress is saved in this browser.</p>
+      <h1>Turn your app idea into a real app with sign-in, without writing any code yourself</h1>
+      <p>In 40 minutes you'll fork a starter web app, connect it to <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin</a>, describe <strong>your own app idea</strong>, and prompt Devin to build it: a landing page for your app, sign-up and sign-in with <a href="https://clerk.com" target="_blank" rel="noopener">Clerk</a>, and a members-only <strong>Coming soon</strong> page listing the features to build next.</p>
+      <p>Enter your GitHub username at the top. Every link and prompt on this page fills in with it and with your app idea, and your progress is saved in this browser.</p>
       <div class="pill-row">
         <span class="pill">40 minutes</span><span class="pill">No coding</span><span class="pill">No Clerk keys needed</span><span class="pill">Next.js 16</span>
       </div>
@@ -144,7 +150,7 @@
 
     <section class="step" id="fork">
       <header><span class="num">1</span><h2>Fork the template repo</h2><span class="budget">4 min</span></header>
-      <p>The template is a small Next.js app. The landing page is public, and there's a <code>/dashboard</code> that's meant to be private but isn't protected yet. You'll fork it so Devin can work on your own copy.</p>
+      <p>The template is a small Next.js app shell with placeholder branding. The landing page is public, and there's a <code>/dashboard</code> "Coming soon" page that's meant to be for members only but isn't protected yet. You'll fork it so Devin can work on your own copy.</p>
       <div class="btn-row">
         <a class="btn" href="https://github.com/MatheusDaros/devin-clerk/fork" target="_blank" rel="noopener">Fork on GitHub ↗</a>
         <a class="btn secondary" href="https://github.com/MatheusDaros/devin-clerk" target="_blank" rel="noopener">View the template</a>
@@ -154,7 +160,7 @@
         <li><strong>Untick "Copy the main branch only"</strong>. That brings the <code>solution</code> branch along, which is handy if you fall behind.</li>
         <li>Click <strong>Create fork</strong>.</li>
       </ol>
-      <div class="checkpoint"><strong>Checkpoint:</strong> <a class="js-fork-link" href="#" target="_blank" rel="noopener"><span class="js-repo">&lt;you&gt;/devin-clerk</span></a> opens and shows the Vibe Board README.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> <a class="js-fork-link" href="#" target="_blank" rel="noopener"><span class="js-repo">&lt;you&gt;/devin-clerk</span></a> opens and shows the workshop README.</div>
       <label class="done-toggle"><input type="checkbox" data-done="fork"> My fork exists</label>
     </section>
 
@@ -174,35 +180,45 @@
     </section>
 
     <section class="step" id="plan">
-      <header><span class="num">3</span><h2>Ask Devin for a plan</h2><span class="budget">7 min</span></header>
-      <p>Start by asking for a plan, not code. You'll review it and steer it before anything gets built.</p>
+      <header><span class="num">3</span><h2>Describe your app and ask for a plan</h2><span class="budget">7 min</span></header>
+      <p>First, tell us about the app you want to build. It can be a side project, something for work, or just for fun. One sentence is plenty. Devin will use it to brand the app and to suggest the features for your Coming soon page.</p>
+      <div class="idea">
+        <label>App name <input id="app-name" type="text" maxlength="40" placeholder="e.g. Plant Pal" autocomplete="off"></label>
+        <label>What does it do? <span class="hint">One sentence, written for your future users.</span>
+          <textarea id="app-desc" maxlength="200" placeholder="e.g. Reminds you when to water each of your plants, based on the species and the weather."></textarea></label>
+      </div>
+      <p>Then ask Devin for a plan, not code. You'll review it and steer it before anything gets built.</p>
       <div class="prompt">
-        <div class="label">Prompt 1: Plan (don't code yet)</div>
+        <div class="label">Prompt 1: Plan (don&#39;t code yet)</div>
         <pre data-prompt>Repository: {{repo}}
 
-I want to add authentication to this app with Clerk. Only write a plan for now: don't change any code until I approve it.
+My app idea is "{{app}}": {{desc}}
+
+Turn this starter into the first version of my app, with sign-in by Clerk. Only write a plan for now: don't change any code until I approve it.
 
 Requirements:
+- Brand it: put my app's name and description in app.config.ts and pick an emoji and accent color that fit.
 - Set up Clerk with the Clerk CLI in accountless mode, following the rules in AGENTS.md. I don't have Clerk keys.
 - Signed-out visitors see "Sign in" and "Sign up" buttons in the header. Signed-in users see their avatar menu instead.
-- /dashboard requires sign-in and greets the user by first name (or the start of their email if they have no name).
-- /api/notes returns a 401 JSON error when signed out.
-- The landing page (/) stays public.
+- The landing page (/) stays public and pitches my app.
+- /dashboard requires sign-in and is a "Coming soon" page: greet the user by first name (or the start of their email if they have no name) and list 4–6 features to build next, based on my description.
+- /api/roadmap returns a 401 JSON error when signed out.
 
-In the plan, list the files you'll create or change, how you'll protect routes, and how you'll check that it works. Keep it short.</pre>
+In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <h3>Review the plan</h3>
       <p>When Devin replies, check that the plan:</p>
       <ul class="tasks">
+        <li>lists 4–6 Coming soon features that make sense for your app,</li>
         <li>runs <code>npx -y clerk@latest init</code> instead of asking you for keys,</li>
-        <li>protects <code>/dashboard</code> (in <code>proxy.ts</code> or on the page) and <code>/api/notes</code>, and leaves <code>/</code> public,</li>
+        <li>protects <code>/dashboard</code> (in <code>proxy.ts</code> or on the page) and <code>/api/roadmap</code>, and leaves <code>/</code> public,</li>
         <li>says how it will verify the result (lint, build, trying it in a browser).</li>
       </ul>
       <p>Then reply with <strong>one change of your own</strong>. For example:</p>
       <div class="prompt">
         <div class="label">Example follow-up</div>
-        <pre data-prompt>Looks good. One change: style the Clerk components with the accent color from app.config.ts.</pre>
+        <pre data-prompt>Looks good. Two changes: swap feature 3 for "&lt;a feature you want&gt;", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <div class="checkpoint"><strong>Checkpoint:</strong> Devin shows an updated plan that includes your change and is waiting for your go-ahead.</div>
@@ -223,13 +239,13 @@ Don't commit .env.local or the .clerk folder.</pre>
       <p>This usually takes 5–10 minutes. While you wait, follow along in the session timeline and watch Devin run the Clerk CLI, edit files and run checks.</p>
       <h3>Try it in the preview</h3>
       <ol class="tasks">
-        <li>Open the preview link Devin shares. You should see <strong>Sign in</strong> and <strong>Sign up</strong> in the header.</li>
+        <li>Open the preview link Devin shares. You should see your app's name, emoji and description, with <strong>Sign in</strong> and <strong>Sign up</strong> in the header.</li>
         <li>Click <strong>Sign up</strong> and use a test email with <code>+clerk_test</code> in it, like <code>yourname+clerk_test@example.com</code>. When Clerk asks for a verification code, enter <code>424242</code>. No real email gets sent.</li>
-        <li>You should land on <code>/dashboard</code>, greeted by name, with your avatar in the header.</li>
+        <li>You should land on the <strong>Coming soon</strong> page (<code>/dashboard</code>): it greets you, lists the features Devin proposed, and your avatar is in the header.</li>
         <li>Sign out from the avatar menu and open <code>/dashboard</code> again. You should be sent to the sign-in page.</li>
         <li>Open the pull request Devin created on <a class="js-pulls-link" href="#" target="_blank" rel="noopener">your fork</a> and skim the diff. Look for <code>proxy.ts</code>, the <code>ClerkProvider</code> in <code>app/layout.tsx</code>, and the new sign-in and sign-up pages.</li>
       </ol>
-      <div class="checkpoint"><strong>Checkpoint:</strong> you signed up as your first user, the dashboard is only visible when you're signed in, and there's an open PR.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> you signed up as your app's first user, the Coming soon page is only visible when you're signed in, and there's an open PR.</div>
       <details><summary>Something looks wrong in the preview</summary>
         <p>Tell Devin exactly what you saw, the way you would with a teammate. For example: <em>"After signing up I land on / instead of /dashboard. Fix it and update the preview."</em></p>
       </details>
@@ -240,20 +256,20 @@ Don't commit .env.local or the .clerk folder.</pre>
       <header><span class="num">5</span><h2>Make it yours</h2><span class="budget">7 min</span></header>
       <p>Pick <strong>one</strong> option and send it in the same session. If you're unsure about the approach, start with "Plan this first:" as in step 3.</p>
       <div class="choices">
-        <details open><summary>A · Rebrand the app</summary>
-          <div class="prompt"><pre data-prompt>Rebrand the app as "&lt;your idea&gt;": update the name, tagline, emoji and accent color in app.config.ts, change the sample notes in data/notes.json to fit the new theme, and make the Clerk sign-in and sign-up screens match. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
+        <details open><summary>A · Polish the landing page</summary>
+          <div class="prompt"><pre data-prompt>Make the landing page sell my app better: a short headline, three benefit bullets based on the description in app.config.ts, and a "Get early access" button that opens sign-up for signed-out visitors and goes to /dashboard for signed-in users. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
         </details>
-        <details><summary>B · Private notes per user</summary>
-          <div class="prompt"><pre data-prompt>Let signed-in users add their own notes from the dashboard. Save each note with the user's Clerk user ID (in memory or a JSON file is fine) and only show users their own notes, plus the sample ones. /api/notes should return only the signed-in user's notes. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
+        <details><summary>B · Branded sign-in pages</summary>
+          <div class="prompt"><pre data-prompt>Redesign the /sign-in and /sign-up pages with a two-column layout: my app's name, emoji and description from app.config.ts on the left, the Clerk component on the right. Stack them on mobile. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
         </details>
-        <details><summary>C · Branded sign-in pages</summary>
-          <div class="prompt"><pre data-prompt>Redesign the /sign-in and /sign-up pages with a two-column layout: our branding and tagline from app.config.ts on the left, the Clerk component on the right. Stack them on mobile. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
+        <details><summary>C · Feature voting</summary>
+          <div class="prompt"><pre data-prompt>On the Coming soon page, let signed-in users upvote the features they want most. Store votes by Clerk user ID (in memory is fine), allow one vote per user per feature, and sort features by votes. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
         </details>
         <details><summary>D · Profile page</summary>
           <div class="prompt"><pre data-prompt>Add a /profile page that only signed-in users can open, using Clerk's UserProfile component, and link to it from the header. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
         </details>
         <details><summary>E · Teams (advanced)</summary>
-          <div class="prompt"><pre data-prompt>Enable Clerk Organizations with the Clerk CLI and add an OrganizationSwitcher to the header. Scope dashboard notes to the active organization, with a personal board when no organization is selected. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
+          <div class="prompt"><pre data-prompt>Enable Clerk Organizations with the Clerk CLI and add an OrganizationSwitcher to the header. Show the active organization's name on the Coming soon page, or "Personal" when none is selected. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
         </details>
       </div>
       <div class="checkpoint"><strong>Checkpoint:</strong> the preview shows your change and the PR has a new commit.</div>
@@ -261,7 +277,15 @@ Don't commit .env.local or the .clerk folder.</pre>
     </section>
 
     <section class="step" id="next">
-      <header><span class="num">6</span><h2>Next steps</h2><span class="budget">2 min</span></header>
+      <header><span class="num">6</span><h2>Keep building after the event</h2><span class="budget">2 min</span></header>
+      <p>Your Coming soon page is your roadmap: every feature on it is a ready-made next prompt. Your Devin Pro plan keeps working after today, so pick one tonight:</p>
+      <div class="prompt">
+        <div class="label">Prompt 4: Build the next feature</div>
+        <pre data-prompt>Repository: {{repo}}
+
+Let's build the next feature of {{app}}. Pick the first entry in upcomingFeatures in app.config.ts and write a short plan for it. Don't change any code until I approve it. Once it's built: remove it from the Coming soon list, link to it from the header, share a preview and open a PR.</pre>
+        <button class="copy" type="button">Copy</button>
+      </div>
       <ul class="tasks">
         <li><strong>Keep your Clerk app.</strong> The keys Devin used belong to a temporary, unclaimed Clerk app. To keep it, click the Clerk banner in your preview and claim it into a free Clerk account. From the <a href="https://dashboard.clerk.com" target="_blank" rel="noopener">Clerk dashboard</a> you can then turn on Google or GitHub sign-in.</li>
         <li><strong>Merge your PR</strong> on <a class="js-pulls-link" href="#" target="_blank" rel="noopener">your fork</a> once you're happy with it.</li>
@@ -290,8 +314,11 @@ Don't commit .env.local or the .clerk folder.</pre>
         <p>New Clerk apps only ask for email and password at sign-up, so there's no first name yet. Click your avatar → <strong>Manage account</strong> and add your name, then reload the dashboard.</p>
       </details>
       <details><summary>I'm running behind</summary>
-        <div class="prompt"><pre data-prompt>Compare my branch with the `solution` branch of this repository and finish whatever is still missing from Prompt 2. Then share a live preview.</pre><button class="copy" type="button">Copy</button></div>
-        <p>If you ticked "Copy the main branch only" when forking, you can browse the <a href="https://github.com/MatheusDaros/devin-clerk/tree/solution" target="_blank" rel="noopener">solution on the template repo</a> instead.</p>
+        <div class="prompt"><pre data-prompt>Compare my branch with the `solution` branch of this repository and finish whatever is still missing from Prompt 2, keeping my app's name, description and features. Then share a live preview.</pre><button class="copy" type="button">Copy</button></div>
+        <p>The <code>solution</code> branch is an example app ("Plant Pal"); Devin will keep your own name and features. If you ticked "Copy the main branch only" when forking, you can browse the <a href="https://github.com/MatheusDaros/devin-clerk/tree/solution" target="_blank" rel="noopener">solution on the template repo</a> instead.</p>
+      </details>
+      <details><summary>I don't like the features Devin picked</summary>
+        <p>Tell it what you want instead: <em>"Replace the Coming soon features with: X, Y and Z."</em> They live in <code>upcomingFeatures</code> in <code>app.config.ts</code>, so it's a quick change.</p>
       </details>
       <details><summary>Devin changed something I didn't ask for</summary>
         <p>Say so directly: <em>"Please revert the change to X. Keep the diff limited to the auth work."</em> Short, specific feedback works best.</p>
@@ -319,6 +346,7 @@ Don't commit .env.local or the .clerk folder.</pre>
 <script>
 (function () {
   var USER_KEY = "clerkDevin.user";
+  var APP_KEY = "clerkDevin.app";
   var DONE_KEY = "clerkDevin.done";
   var TIMER_KEY = "clerkDevin.timer";
   var TOTAL = 40 * 60;
@@ -339,12 +367,25 @@ Don't commit .env.local or the .clerk folder.</pre>
   function render() {
     var user = sanitize(input.value);
     var repo = (user || "<you>") + "/devin-clerk";
-    prompts.forEach(function (el) { el.textContent = el.dataset.template.split("{{repo}}").join(repo); });
+    var app = appName.value.trim() || "<your app name>";
+    var desc = appDesc.value.trim().replace(/\s+/g, " ") || "<one sentence about what it does>";
+    prompts.forEach(function (el) {
+      el.textContent = el.dataset.template.split("{{repo}}").join(repo).split("{{app}}").join(app).split("{{desc}}").join(desc);
+    });
     document.querySelectorAll(".js-repo").forEach(function (el) { el.textContent = repo; });
     var base = user ? "https://github.com/" + user + "/devin-clerk" : "https://github.com/MatheusDaros/devin-clerk";
     document.querySelectorAll(".js-fork-link").forEach(function (el) { el.href = base; });
     document.querySelectorAll(".js-pulls-link").forEach(function (el) { el.href = base + "/pulls"; });
   }
+
+  var appName = document.getElementById("app-name");
+  var appDesc = document.getElementById("app-desc");
+  var idea = read(APP_KEY, { name: "", desc: "" });
+  appName.value = idea.name || "";
+  appDesc.value = idea.desc || "";
+  function saveIdea() { write(APP_KEY, { name: appName.value, desc: appDesc.value }); render(); }
+  appName.addEventListener("input", saveIdea);
+  appDesc.addEventListener("input", saveIdea);
 
   input.value = read(USER_KEY, "");
   input.addEventListener("input", function () { write(USER_KEY, sanitize(input.value)); render(); });
