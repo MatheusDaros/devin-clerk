@@ -26,6 +26,7 @@
 - **trycloudflare.com link stopped working:** the tunnel only runs while Devin's machine is awake. Ask Devin to restart the dev server and `npm run share` and send the new link; the old one is gone.
 - **Devin asks the attendee to sign up in its Desktop browser:** the "Verify you are human" check fails there. Reply "I'll sign up at the public link myself."
 - **Claim link:** it's single-use and works like a password. Attendees shouldn't paste it into the room chat.
+- **"Waiting for you to paste your keys" after claiming:** tell attendees to click **Otherwise skip**. `clerk init` already wrote the same keys to `.env.local`, and nobody should paste the secret key into Devin's chat.
 - **Verification email never arrives:** use a `+clerk_test` email and code `424242`.
 - **"Verify you are human" on sign-up:** Clerk bot protection; the attendee ticks it at their public link. It can block Devin's own automated browser, so attendees do the sign-up test themselves.
 - **Dashboard greeting has no name:** new Clerk apps don't collect names at sign-up. Add one via avatar → Manage account.

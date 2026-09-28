@@ -57,7 +57,8 @@ Help me claim my Clerk app: run `npx -y clerk@latest open --print` and send me t
 ```
 
 Then:
-- Open the claim link, sign in to Clerk (or create a free account) and claim the app. Your running app keeps working at the same link.
+- Open the claim link, sign in to Clerk (or create a free account) and claim the app.
+- Clerk then shows **Set your environment variables** and waits for you to paste two keys. Devin already put the same keys in `.env.local`, so click **Otherwise skip**. Your running app keeps working at the same link. Don't paste the keys into Devin's chat: the secret key works like a password.
 - Clerk Dashboard → **User & authentication** → **Password** → **Update password requirements**: set the minimum length to 8, the lowest Clerk allows.
 - Under **User & authentication**, turn on collecting first and last name at sign-up.
 - Sign out at your link and sign up again with a new `+clerk_test` email to see the new rules.
