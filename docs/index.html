@@ -297,7 +297,8 @@ Don't commit .env.local or the .clerk folder.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <ol class="tasks">
-        <li>Open the claim link and sign in to Clerk, or create a free account. Claim the app when Clerk asks. Your running app keeps working at the same link.</li>
+        <li>Open the claim link and sign in to Clerk, or create a free account. Claim the app when Clerk asks.</li>
+        <li>Clerk then shows <strong>Set your environment variables</strong> with two keys and says it's waiting for you to paste them. You don't need to: Devin already put these same keys in <code>.env.local</code> during setup. Click <strong>Otherwise skip</strong>. Your running app keeps working at the same link. Don't paste the keys into Devin's chat or anywhere else: the secret key works like a password.</li>
         <li>In the <a href="https://dashboard.clerk.com" target="_blank" rel="noopener">Clerk Dashboard</a>, go to <strong>User &amp; authentication</strong> → <strong>Password</strong> → <strong>Update password requirements</strong> and set the minimum length to <strong>8</strong>, the lowest Clerk allows.</li>
         <li>Still under <strong>User &amp; authentication</strong>, turn on collecting first and last name at sign-up, so your Coming soon page can greet new users by name.</li>
         <li>Open <strong>Users</strong> in the dashboard: the account you signed up with in step 4 is there.</li>
