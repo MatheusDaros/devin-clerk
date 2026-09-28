@@ -73,6 +73,14 @@
   .idea textarea { resize: vertical; min-height: 64px; }
   .idea input:focus, .idea textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   .idea .hint { font-weight: 400; color: var(--muted); font-size: 13px; }
+  .tip { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 16px 0; }
+  .info { position: relative; display: inline-block; }
+  .info > button { font: 700 12px ui-sans-serif, system-ui; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--accent); background: #fff; color: var(--accent); cursor: help; padding: 0; vertical-align: 1px; }
+  .info .pop { display: none; position: absolute; z-index: 20; left: 50%; transform: translateX(-50%); top: calc(100% + 6px); width: min(360px, 86vw); background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 12px 14px; font-size: 14px; font-weight: 400; }
+  .info .pop::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+  .info .pop p { margin: 0 0 8px; }
+  .info .pop ul { margin: 0; padding-left: 18px; }
+  .info:hover .pop, .info:focus-within .pop { display: block; }
   .choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
   .choices details { margin: 0; }
   table.agenda { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }
@@ -141,9 +149,9 @@
       <ol class="tasks">
         <li><strong>A GitHub account.</strong> Any personal account works (<a href="https://github.com/signup" target="_blank" rel="noopener">sign up</a>).</li>
         <li><strong>Devin Pro, activated with your event coupon.</strong> Sign up at <a href="https://app.devin.ai" target="_blank" rel="noopener">app.devin.ai</a>, open <a href="https://app.devin.ai/settings/plans" target="_blank" rel="noopener">Settings → Plans</a>, pick <strong>Pro</strong>, and enter the coupon code you received from the organizer at checkout.</li>
-        <li><strong>GitHub connected to Devin.</strong> Go to <a href="https://app.devin.ai/settings/connections" target="_blank" rel="noopener">Settings → Connections</a> and connect GitHub. If GitHub asks which repositories Devin can access, choosing <em>All repositories</em> saves a step later.</li>
+        <li><strong>GitHub connected to Devin.</strong> Go to <a href="https://app.devin.ai/settings/connections/github" target="_blank" rel="noopener">Settings → Connections → GitHub</a>, click <strong>Add Connection</strong>, and pick your personal GitHub account. When GitHub asks which repositories Devin can access, choose <em>All repositories</em>. That saves a step later.</li>
       </ol>
-      <div class="checkpoint"><strong>Checkpoint:</strong> your Devin plan page shows <strong>Pro</strong>, and GitHub shows as connected under Connections.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> your Devin plan page shows <strong>Pro</strong>, and GitHub is listed under Settings → Connections.</div>
       <p>You <strong>don't</strong> need a Clerk account. Devin will create a temporary development app that you can claim at the end.</p>
       <label class="done-toggle"><input type="checkbox" data-done="before"> I'm ready</label>
     </section>
@@ -167,12 +175,18 @@
     <section class="step" id="connect">
       <header><span class="num">2</span><h2>Connect your fork to Devin</h2><span class="budget">5 min</span></header>
       <ol class="tasks">
-        <li>Open <a href="https://app.devin.ai/settings/connections" target="_blank" rel="noopener">Devin → Settings → Connections</a> and click your GitHub connection. Check that <code class="js-repo">&lt;you&gt;/devin-clerk</code> is in the list of available repositories.
-          <details><summary>My fork isn't listed</summary>
-            <p>When you connected GitHub, you probably chose "Only select repositories". On GitHub, go to <a href="https://github.com/settings/installations" target="_blank" rel="noopener">Settings → Applications → Installed GitHub Apps</a>, click <strong>Configure</strong> next to Devin, add <code>devin-clerk</code>, and save. Then reload Devin.</p>
+        <li>Go to the <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin home page</a> and start a new <strong>Agent</strong> session.</li>
+        <li>Click the <strong>repository selector</strong> and choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.
+          <details><summary>My fork isn't in the list</summary>
+            <p>Devin can only see repositories that its GitHub app is allowed to access. You probably chose "Only select repositories" when you connected GitHub.</p>
+            <ol class="tasks">
+              <li>On GitHub, open <a href="https://github.com/settings/installations" target="_blank" rel="noopener">Settings → Applications → Installed GitHub Apps</a> and click <strong>Configure</strong> next to the Devin app.</li>
+              <li>Under <strong>Repository access</strong>, choose <em>All repositories</em> or add <code>devin-clerk</code>, then click <strong>Save</strong>.</li>
+              <li>Reload Devin and open the selector again. It can take a minute for the list to update.</li>
+            </ol>
+            <p>If you forked into a GitHub <strong>organization</strong> instead of your personal account, the Devin app must also be installed on that organization. In Devin, open <a href="https://app.devin.ai/settings/connections/github" target="_blank" rel="noopener">Settings → Connections → GitHub</a>, click <strong>Add Connection</strong> and pick the organization.</p>
           </details>
         </li>
-        <li>Go to the <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin home page</a> and start a new <strong>Agent</strong> session. If there's a repository picker, choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.</li>
         <li>Keep the tab open. You'll paste the first prompt in the next step.</li>
       </ol>
       <div class="note">Devin reads <code>AGENTS.md</code> in your repo before it starts. It covers the project's commands and the Clerk rules, e.g. "use the Clerk CLI in accountless mode" and "never commit keys". That's why your prompts can stay short.</div>
@@ -194,7 +208,7 @@
 
 My app idea is "{{app}}": {{desc}}
 
-Turn this starter into the first version of my app, with sign-in by Clerk. Only write a plan for now: don't change any code until I approve it.
+Turn this starter into the first version of my app, with sign-in by Clerk. This message is for planning only: reply with a plan and then stop. Don't edit files, install packages or run the Clerk CLI until I reply with "approved".
 
 Requirements:
 - Brand it: put my app's name and description in app.config.ts and pick an emoji and accent color that fit.
@@ -204,7 +218,7 @@ Requirements:
 - /dashboard requires sign-in and is a "Coming soon" page: greet the user by first name (or the start of their email if they have no name) and list 4–6 features to build next, based on my description.
 - /api/roadmap returns a 401 JSON error when signed out.
 
-In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short.</pre>
+In the plan, list the features you'd put on the Coming soon page, the files you'll change, how you'll protect routes, and how you'll check that it works. Keep it short, and end by asking me to approve it.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <h3>Review the plan</h3>
@@ -218,62 +232,79 @@ In the plan, list the features you'd put on the Coming soon page, the files you'
       <p>Then reply with <strong>one change of your own</strong>. For example:</p>
       <div class="prompt">
         <div class="label">Example follow-up</div>
-        <pre data-prompt>Looks good. Two changes: swap feature 3 for "&lt;a feature you want&gt;", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.</pre>
+        <pre data-prompt>Not approved yet. Update the plan with two changes: swap feature 3 for "&lt;a feature you want&gt;", and style the Clerk sign-in and sign-up components with the accent color from app.config.ts.
+
+Reply with the full updated plan only. Don't edit files, install anything or run commands yet. I'll reply "approved" when it's ready to build.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
-      <div class="checkpoint"><strong>Checkpoint:</strong> Devin shows an updated plan that includes your change and is waiting for your go-ahead.</div>
+      <div class="checkpoint"><strong>Checkpoint:</strong> Devin shows an updated plan that includes your change and is waiting for your go-ahead. No files have changed yet.</div>
+      <details><summary>Devin started building anyway</summary>
+        <p>Send <em>"Stop. Don't make any more changes. Show me the plan you're following, including my changes, and wait for my approval."</em> Anything it already changed stays on its branch, and Prompt 2 will pick up from there.</p>
+      </details>
       <label class="done-toggle"><input type="checkbox" data-done="plan"> I have a plan I like</label>
     </section>
 
     <section class="step" id="build">
       <header><span class="num">4</span><h2>Build it and try it out</h2><span class="budget">11 min</span></header>
+      <div class="tip"><strong>Tip: switch to Fusion before you send Prompt 2.</strong> Use the agent selector next to the message box in your Devin session and pick <strong>Fusion</strong>. The new mode applies from your next message.
+        <span class="info"><button type="button" aria-label="What is Fusion?" aria-describedby="fusion-pop">?</button>
+          <span class="pop" id="fusion-pop" role="tooltip">
+            <p><strong>What is Fusion?</strong> Devin runs two models together. A frontier "lead" model plans, handles the hard parts and reviews the work. A cheaper "sidekick" model does the routine steps: reading files, editing and running checks. You still talk to one Devin.</p>
+            <p><strong>Why use it here?</strong> Implementing an approved plan is mostly routine work, and that's where Fusion saves the most while keeping frontier-level quality. Your usage lasts longer.</p>
+            <p><strong>Now 30–40% cheaper:</strong> on Sept 28, 2026, Cognition announced that Devin is 30–40% cheaper in Fusion and Normal modes. Fusion also now leads the FrontierCode 1.1 Extended benchmark (score 68.8, about $0.60 per task).</p>
+            <ul>
+              <li><a href="https://devin.ai/blog/more-efficient-devin" target="_blank" rel="noopener">Devin is now up to 40% more cost-efficient</a> (<a href="https://x.com/cognition/status/2104633216145436831" target="_blank" rel="noopener">announcement on X</a>)</li>
+              <li><a href="https://cognition.com/blog/local-fusion" target="_blank" rel="noopener">Introducing Fusion in Devin Desktop &amp; CLI</a></li>
+              <li><a href="https://cognition.com/blog/devin-fusion" target="_blank" rel="noopener">Devin Fusion: how it works and benchmarks</a></li>
+              <li><a href="https://docs.devin.ai/desktop/fusion" target="_blank" rel="noopener">Fusion docs</a></li>
+            </ul>
+          </span>
+        </span>
+        <br>If you don't see Fusion, keep the default mode. The prompts work either way.
+      </div>
       <div class="prompt">
         <div class="label">Prompt 2: Implement and verify</div>
         <pre data-prompt>The plan is approved, go ahead and implement it. When you're done:
 1. Run lint, typecheck and build, and fix any errors.
-2. Start the dev server and share a live preview with me.
-3. Open a pull request with a short description.
+2. Start the dev server, run `npm run share` and send me the public https://…trycloudflare.com link it prints. Don't use the built-in browser preview: Clerk sign-in doesn't work there.
+3. Check the signed-out behavior at that link yourself. I'll do the sign-up test in my own browser, so don't try to sign up.
+4. Open a pull request with a short description.
 Don't commit .env.local or the .clerk folder.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <p>This usually takes 5–10 minutes. While you wait, follow along in the session timeline and watch Devin run the Clerk CLI, edit files and run checks.</p>
-      <h3>Try it in the preview</h3>
+      <h3>Try it in your browser</h3>
       <ol class="tasks">
-        <li>Open the preview link Devin shares. You should see your app's name, emoji and description, with <strong>Sign in</strong> and <strong>Sign up</strong> in the header.</li>
+        <li>Open the <code>https://…trycloudflare.com</code> link Devin sends in a normal browser tab. It's public while your session runs, so keep it to yourself. You should see your app's name, emoji and description, with <strong>Sign in</strong> and <strong>Sign up</strong> in the header.</li>
         <li>Click <strong>Sign up</strong> and use a test email with <code>+clerk_test</code> in it, like <code>yourname+clerk_test@example.com</code>. When Clerk asks for a verification code, enter <code>424242</code>. No real email gets sent.</li>
         <li>You should land on the <strong>Coming soon</strong> page (<code>/dashboard</code>): it greets you, lists the features Devin proposed, and your avatar is in the header.</li>
         <li>Sign out from the avatar menu and open <code>/dashboard</code> again. You should be sent to the sign-in page.</li>
         <li>Open the pull request Devin created on <a class="js-pulls-link" href="#" target="_blank" rel="noopener">your fork</a> and skim the diff. Look for <code>proxy.ts</code>, the <code>ClerkProvider</code> in <code>app/layout.tsx</code>, and the new sign-in and sign-up pages.</li>
       </ol>
       <div class="checkpoint"><strong>Checkpoint:</strong> you signed up as your app's first user, the Coming soon page is only visible when you're signed in, and there's an open PR.</div>
-      <details><summary>Something looks wrong in the preview</summary>
-        <p>Tell Devin exactly what you saw, the way you would with a teammate. For example: <em>"After signing up I land on / instead of /dashboard. Fix it and update the preview."</em></p>
+      <details><summary>Something looks wrong in the app</summary>
+        <p>Tell Devin exactly what you saw, the way you would with a teammate. For example: <em>"After signing up I land on / instead of /dashboard. Fix it; I'll reload the same link."</em> The dev server reloads on its own, so the link stays the same.</p>
       </details>
-      <label class="done-toggle"><input type="checkbox" data-done="build"> Auth works in my preview</label>
+      <label class="done-toggle"><input type="checkbox" data-done="build"> Auth works at my link</label>
     </section>
 
     <section class="step" id="customize">
       <header><span class="num">5</span><h2>Make it yours</h2><span class="budget">7 min</span></header>
-      <p>Pick <strong>one</strong> option and send it in the same session. If you're unsure about the approach, start with "Plan this first:" as in step 3.</p>
-      <div class="choices">
-        <details open><summary>A · Polish the landing page</summary>
-          <div class="prompt"><pre data-prompt>Make the landing page sell my app better: a short headline, three benefit bullets based on the description in app.config.ts, and a "Get early access" button that opens sign-up for signed-out visitors and goes to /dashboard for signed-in users. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
-        </details>
-        <details><summary>B · Branded sign-in pages</summary>
-          <div class="prompt"><pre data-prompt>Redesign the /sign-in and /sign-up pages with a two-column layout: my app's name, emoji and description from app.config.ts on the left, the Clerk component on the right. Stack them on mobile. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
-        </details>
-        <details><summary>C · Feature voting</summary>
-          <div class="prompt"><pre data-prompt>On the Coming soon page, let signed-in users upvote the features they want most. Store votes by Clerk user ID (in memory is fine), allow one vote per user per feature, and sort features by votes. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
-        </details>
-        <details><summary>D · Profile page</summary>
-          <div class="prompt"><pre data-prompt>Add a /profile page that only signed-in users can open, using Clerk's UserProfile component, and link to it from the header. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
-        </details>
-        <details><summary>E · Teams (advanced)</summary>
-          <div class="prompt"><pre data-prompt>Enable Clerk Organizations with the Clerk CLI and add an OrganizationSwitcher to the header. Show the active organization's name on the Coming soon page, or "Personal" when none is selected. Update the preview and push to the same PR.</pre><button class="copy" type="button">Copy</button></div>
-        </details>
+      <p>The app Devin set up lives in a temporary Clerk account. Claim it into your own free Clerk account so it keeps working after today and you can change its settings, starting with the password rule: temporary apps can ask for a long password.</p>
+      <div class="prompt">
+        <div class="label">Prompt 3: Claim your Clerk app</div>
+        <pre data-prompt>Help me claim my Clerk app: run `npx -y clerk@latest open --print` and send me the claim link it prints. Only send it to me here: don't put it in any file, commit or PR.</pre>
+        <button class="copy" type="button">Copy</button>
       </div>
-      <div class="checkpoint"><strong>Checkpoint:</strong> the preview shows your change and the PR has a new commit.</div>
-      <label class="done-toggle"><input type="checkbox" data-done="customize"> I made it mine</label>
+      <ol class="tasks">
+        <li>Open the claim link and sign in to Clerk, or create a free account. Claim the app when Clerk asks. Your running app keeps working at the same link.</li>
+        <li>In the <a href="https://dashboard.clerk.com" target="_blank" rel="noopener">Clerk Dashboard</a>, go to <strong>User &amp; authentication</strong> → <strong>Password</strong> → <strong>Update password requirements</strong> and set the minimum length to <strong>8</strong>, the lowest Clerk allows.</li>
+        <li>Still under <strong>User &amp; authentication</strong>, turn on collecting first and last name at sign-up, so your Coming soon page can greet new users by name.</li>
+        <li>Open <strong>Users</strong> in the dashboard: the account you signed up with in step 4 is there.</li>
+        <li>Sign out at your link and sign up again with a new <code>+clerk_test</code> email. The form now asks for a name and accepts an 8-character password.</li>
+      </ol>
+      <div class="checkpoint"><strong>Checkpoint:</strong> the app shows up in your Clerk Dashboard, and sign-up uses your new rules.</div>
+      <label class="done-toggle"><input type="checkbox" data-done="customize"> My Clerk app is mine</label>
     </section>
 
     <section class="step" id="next">
@@ -283,16 +314,35 @@ Don't commit .env.local or the .clerk folder.</pre>
         <div class="label">Prompt 4: Build the next feature</div>
         <pre data-prompt>Repository: {{repo}}
 
-Let's build the next feature of {{app}}. Pick the first entry in upcomingFeatures in app.config.ts and write a short plan for it. Don't change any code until I approve it. Once it's built: remove it from the Coming soon list, link to it from the header, share a preview and open a PR.</pre>
+Let's build the next feature of {{app}}. Pick the first entry in upcomingFeatures in app.config.ts and write a short plan for it. Don't change any code until I approve it. Once it's built: remove it from the Coming soon list, link to it from the header, share a public link with npm run share and open a PR.</pre>
         <button class="copy" type="button">Copy</button>
       </div>
       <ul class="tasks">
-        <li><strong>Keep your Clerk app.</strong> The keys Devin used belong to a temporary, unclaimed Clerk app. To keep it, click the Clerk banner in your preview and claim it into a free Clerk account. From the <a href="https://dashboard.clerk.com" target="_blank" rel="noopener">Clerk dashboard</a> you can then turn on Google or GitHub sign-in.</li>
+        <li><strong>More sign-in options.</strong> In your <a href="https://dashboard.clerk.com" target="_blank" rel="noopener">Clerk Dashboard</a>, turn on GitHub or other social sign-in, or passwordless email codes.</li>
         <li><strong>Merge your PR</strong> on <a class="js-pulls-link" href="#" target="_blank" rel="noopener">your fork</a> once you're happy with it.</li>
         <li><strong>Deploy it.</strong> Ask Devin: <em>"Walk me through deploying this app to Vercel with my Clerk keys set as environment variables."</em></li>
         <li><strong>Speed up future sessions.</strong> Ask Devin: <em>"Set up your environment for this repository."</em> and approve the suggestion. New sessions then start with dependencies already installed.</li>
         <li>Learn more: <a href="https://clerk.com/docs" target="_blank" rel="noopener">Clerk docs</a> · <a href="https://docs.devin.ai" target="_blank" rel="noopener">Devin docs</a>.</li>
       </ul>
+      <h3>More ideas to try</h3>
+      <p>Send any of these in your workshop session, or in a new session with your fork selected.</p>
+      <div class="choices">
+        <details open><summary>A · Polish the landing page</summary>
+          <div class="prompt"><pre data-prompt>Make the landing page sell my app better: a short headline, three benefit bullets based on the description in app.config.ts, and a "Get early access" button that opens sign-up for signed-out visitors and goes to /dashboard for signed-in users. Push to the same PR and share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
+        </details>
+        <details><summary>B · Branded sign-in pages</summary>
+          <div class="prompt"><pre data-prompt>Redesign the /sign-in and /sign-up pages with a two-column layout: my app's name, emoji and description from app.config.ts on the left, the Clerk component on the right. Stack them on mobile. Push to the same PR and share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
+        </details>
+        <details><summary>C · Feature voting</summary>
+          <div class="prompt"><pre data-prompt>On the Coming soon page, let signed-in users upvote the features they want most. Store votes by Clerk user ID (in memory is fine), allow one vote per user per feature, and sort features by votes. Push to the same PR and share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
+        </details>
+        <details><summary>D · Profile page</summary>
+          <div class="prompt"><pre data-prompt>Add a /profile page that only signed-in users can open, using Clerk's UserProfile component, and link to it from the header. Push to the same PR and share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
+        </details>
+        <details><summary>E · Teams (advanced)</summary>
+          <div class="prompt"><pre data-prompt>Enable Clerk Organizations with the Clerk CLI and add an OrganizationSwitcher to the header. Show the active organization's name on the Coming soon page, or "Personal" when none is selected. Push to the same PR and share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
+        </details>
+      </div>
       <label class="done-toggle"><input type="checkbox" data-done="next"> Done! 🎉</label>
     </section>
 
@@ -301,20 +351,23 @@ Let's build the next feature of {{app}}. Pick the first entry in upcomingFeature
       <details><summary>Devin asks me for Clerk API keys</summary>
         <p>Reply: <em>"I don't have keys. Use accountless mode as described in AGENTS.md: run <code>npx -y clerk@latest init</code>."</em></p>
       </details>
-      <details><summary>I don't see a preview link</summary>
-        <p>Ask: <em>"Share a browser preview of the dev server on port 3000."</em> You can also open the session's <strong>Desktop</strong> tab to watch Devin's browser.</p>
+      <details><summary>Devin shared a preview, or sign-in doesn't work in it</summary>
+        <p>Clerk sign-in doesn't work in Devin's built-in browser preview. Ask: <em>"Run npm run share with the dev server on port 3000 and send me the public trycloudflare.com link."</em></p>
+      </details>
+      <details><summary>My trycloudflare.com link stopped working</summary>
+        <p>The link only works while Devin's machine is awake and the tunnel is running. Ask: <em>"The link is down. Restart the dev server and npm run share, and send me the new link."</em> The old link won't come back.</p>
       </details>
       <details><summary>The verification email never arrives</summary>
         <p>Sign up with an email that contains <code>+clerk_test</code> (e.g. <code>yourname+clerk_test@example.com</code>) and use code <code>424242</code>. Clerk development apps accept these without sending mail.</p>
       </details>
       <details><summary>The sign-up form shows "Verify you are human"</summary>
-        <p>That's Clerk's bot protection. Tick the checkbox and continue. Inside Devin's automated browser it can block Devin from finishing the sign-up itself, which is why you do the sign-up test in the preview yourself.</p>
+        <p>That's Clerk's bot protection. Tick the checkbox and continue. Inside Devin's automated browser it can block Devin from finishing the sign-up itself, which is why you do the sign-up test yourself at your link.</p>
       </details>
       <details><summary>The dashboard says "Welcome back" without my name</summary>
         <p>New Clerk apps only ask for email and password at sign-up, so there's no first name yet. Click your avatar → <strong>Manage account</strong> and add your name, then reload the dashboard.</p>
       </details>
       <details><summary>I'm running behind</summary>
-        <div class="prompt"><pre data-prompt>Compare my branch with the `solution` branch of this repository and finish whatever is still missing from Prompt 2, keeping my app's name, description and features. Then share a live preview.</pre><button class="copy" type="button">Copy</button></div>
+        <div class="prompt"><pre data-prompt>Compare my branch with the `solution` branch of this repository and finish whatever is still missing from Prompt 2, keeping my app's name, description and features. Then share a public link with npm run share.</pre><button class="copy" type="button">Copy</button></div>
         <p>The <code>solution</code> branch is an example app ("Plant Pal"); Devin will keep your own name and features. If you ticked "Copy the main branch only" when forking, you can browse the <a href="https://github.com/MatheusDaros/devin-clerk/tree/solution" target="_blank" rel="noopener">solution on the template repo</a> instead.</p>
       </details>
       <details><summary>I don't like the features Devin picked</summary>
@@ -333,8 +386,8 @@ Let's build the next feature of {{app}}. Pick the first entry in upcomingFeature
         <tr><td>4–8</td><td>1. Fork</td></tr>
         <tr><td>8–13</td><td>2. Connect Devin and start a session</td></tr>
         <tr><td>13–20</td><td>3. Plan and review</td></tr>
-        <tr><td>20–31</td><td>4. Build, preview, sign up</td></tr>
-        <tr><td>31–38</td><td>5. Make it yours</td></tr>
+        <tr><td>20–31</td><td>4. Build, open the link, sign up</td></tr>
+        <tr><td>31–38</td><td>5. Make it yours: claim the Clerk app</td></tr>
         <tr><td>38–40</td><td>6. Wrap-up</td></tr>
       </table>
     </details>

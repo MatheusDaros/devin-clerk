@@ -8,7 +8,7 @@ In the workshop you'll turn an app idea of your own into a first version with si
 
 1. **GitHub.** Any personal account works: https://github.com/signup
 2. **Devin Pro, free with your code.** Sign up at https://app.devin.ai, then open https://app.devin.ai/settings/plans, choose **Pro**, and apply this coupon at checkout: `{coupon_code}`. Check that your plan page shows **Pro** afterwards.
-3. **Connect GitHub to Devin.** In Devin, go to https://app.devin.ai/settings/connections and connect GitHub. If GitHub asks which repositories to share, pick **All repositories**. Otherwise you'll need to add the workshop repo by hand on the day.
+3. **Connect GitHub to Devin.** In Devin, go to https://app.devin.ai/settings/connections/github, click **Add Connection** and pick your personal GitHub account. When GitHub asks which repositories to share, pick **All repositories**. Otherwise you'll need to add the workshop repo by hand on the day.
 
 You don't need a Clerk account. Devin creates a temporary one for your app, and you can claim it afterwards if you want to keep it.
 
