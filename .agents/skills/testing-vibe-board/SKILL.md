@@ -7,7 +7,7 @@ description: Runtime testing of the workshop walkthrough and Clerk solution bran
 
 - Preserve the initial branch and tracked working-tree status. The starter/PR branch and `solution` have different behavior; restore the initial checkout and stop servers after testing.
 - Serve the PR's `docs/` with `python3 -m http.server 8000 --directory docs`. If switching branches while testing, copy the docs to a temporary directory first and serve that snapshot.
-- On `solution`, run `npm install` and `npm run dev -- --port 3000`. Use the existing ignored `.env.local` and `.clerk/`; never print their contents.
+- On `solution`, run `npm install` and `npm run dev -- --port 3000`. Test through the public link from `npm run share` (Cloudflare quick tunnel), not a Devin browser preview: Clerk sign-in doesn't work in the preview. Use the existing ignored `.env.local` and `.clerk/`; never print their contents.
 - Walkthrough state uses localStorage keys `clerkDevin.user`, `clerkDevin.app`, `clerkDevin.done`, and `clerkDevin.timer`. Test real controls and reload persistence. At 390px, compare document scrollWidth with innerWidth as well as inspecting screenshots.
 - Test auth API responses using browser-context fetch, retaining the browser's session. Expected signed-out response: 401 `{"error":"Unauthorized"}`; authenticated response: 200 with a `features` array matching `upcomingFeatures` in `app.config.ts`.
 - Use a unique `+clerk_test` email and verification code `424242`. Try Turnstile only via an ordinary GUI click. If it blocks, report UI signup as incomplete, not passed.
