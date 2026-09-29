@@ -51,6 +51,9 @@
   section.step h3 { font-size: 16px; margin: 20px 0 6px; }
   ol.tasks, ul.tasks { padding-left: 22px; }
   ol.tasks li, ul.tasks li { margin: 6px 0; }
+  figure.shot { margin: 10px 0 12px; }
+  figure.shot img { display: block; width: 100%; max-width: 560px; height: auto; border: 1px solid var(--line); border-radius: 10px; }
+  figure.shot figcaption { font-size: 13px; color: var(--muted); margin-top: 4px; }
   .btn { display: inline-flex; align-items: center; gap: 6px; font: 600 15px ui-sans-serif, system-ui; background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 0; cursor: pointer; }
   .btn.secondary { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
   .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
@@ -176,7 +179,8 @@
       <header><span class="num">2</span><h2>Connect your fork to Devin</h2><span class="budget">5 min</span></header>
       <ol class="tasks">
         <li>Go to the <a href="https://app.devin.ai" target="_blank" rel="noopener">Devin home page</a> and start a new <strong>Agent</strong> session.</li>
-        <li>Click the <strong>repository selector</strong> and choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.
+        <li>Open the <strong>repository selector</strong>: click <strong>+</strong> under the message box, then <strong>Repositories</strong>, and choose <code class="js-repo">&lt;you&gt;/devin-clerk</code>.
+          <figure class="shot"><img src="img/step2-repositories.png" width="917" height="620" alt="Devin's new-session box with the + menu open and Repositories highlighted" loading="lazy"><figcaption>The + menu under the message box, with Repositories highlighted.</figcaption></figure>
           <details><summary>My fork isn't in the list</summary>
             <p>Devin can only see repositories that its GitHub app is allowed to access. You probably chose "Only select repositories" when you connected GitHub.</p>
             <ol class="tasks">
